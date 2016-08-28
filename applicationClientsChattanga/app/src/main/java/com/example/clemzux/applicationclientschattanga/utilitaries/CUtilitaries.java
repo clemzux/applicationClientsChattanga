@@ -1,0 +1,43 @@
+package com.example.clemzux.applicationclientschattanga.utilitaries;
+
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
+
+import com.example.clemzux.applicationclientschattanga.R;
+
+/**
+ * Created by clemzux on 28/08/16.
+ */
+public class CUtilitaries extends AppCompatActivity{
+    private static CUtilitaries ourInstance = new CUtilitaries();
+
+    public static CUtilitaries getInstance() {
+        return ourInstance;
+    }
+
+    private CUtilitaries() {
+    }
+
+    public static void test(Context pContext, String pVar) {
+
+        Toast t = Toast.makeText(pContext, pVar, Toast.LENGTH_SHORT);
+        t.show();
+    }
+
+    public static  int imageRessourceSearcher(String pImageName) {
+
+        switch (pImageName) {
+            case "hotdog":
+                return R.drawable.hotdog;
+
+            case "pizzafromage":
+                return R.drawable.pizzafromage;
+
+            case "pouletfrites":
+                return R.drawable.pouletfrites;
+        }
+
+        return R.drawable.wrongimage;
+    }
+}

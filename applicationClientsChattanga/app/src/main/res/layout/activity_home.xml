@@ -30,7 +30,7 @@
                 android:id="@+id/date_textView_home"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Aujourd'hui on vous propose en plat du jour :"
+                android:text="Aujourd'hui on vous propose en plat du jour"
                 android:textColor="@color/black"
                 android:layout_marginTop="50dp"
                 android:textSize="16dp"/>
@@ -52,7 +52,7 @@
 
                 <ImageView
                     android:id="@+id/dayDish_imageView"
-                    android:src="@drawable/imagetest"
+                    android:src="@drawable/wrongimage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
 

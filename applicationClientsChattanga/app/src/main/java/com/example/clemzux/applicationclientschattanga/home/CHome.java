@@ -5,17 +5,21 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.clemzux.applicationclientschattanga.R;
 import com.example.clemzux.applicationclientschattanga.reservation.CReservation;
+import com.example.clemzux.applicationclientschattanga.utilitaries.CJsonDecoder;
+import com.example.clemzux.applicationclientschattanga.utilitaries.CProperties;
+import com.example.clemzux.applicationclientschattanga.utilitaries.CRestRequest;
+import com.example.clemzux.applicationclientschattanga.utilitaries.CUtilitaries;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 import chattanga.classes.CDate;
@@ -30,9 +34,9 @@ public class CHome extends AppCompatActivity {
     private ImageView dayDishImageView;
     private TextView dayDishTextView, webSiteTextView, dateTextView;
 
-    private String currentCate;
+    private String currentdate;
 
-    private CDate currentDayDish;
+    private CDate currentDayDish = null;
 
 
     //////// methods ////////
@@ -47,7 +51,7 @@ public class CHome extends AppCompatActivity {
         // mon code
 
         // initialisation de la date
-        //initDate();
+        initCurrentDate();
 
         // initialisation widgets
         initWidgets();
@@ -56,11 +60,59 @@ public class CHome extends AppCompatActivity {
         initListeners();
 
         // chargement des informations de plat du jour en fonction de la journée et de l'heure
-        dayDishLoader();
+        try {
+            dayDishLoader();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initCurrentDate() {
+
+        String day, month, year;
+        int hour;
+        Calendar calendar = Calendar.getInstance();
+
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+        if (hour > CProperties.HOUR_RESET_DAYDISH)
+            day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH) + 1);
+        else
+            day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+
+        month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+        year = String.valueOf(calendar.get(Calendar.YEAR));
+
+        if (month.length() == 1)
+            month = "0" + month;
+
+        if (day.length() == 1)
+            day = "0" + day;
+
+        currentdate = day + "-" + month + "-" + year;
     }
 
     private void dayDishLoader() throws ExecutionException, InterruptedException, IOException, JSONException {
 
+        dateTextView.setText("Aujourd'hui (" + currentdate + ")on vous propose en plat du jour");
+
+        try {
+
+            // on demande au server le plat du jour
+            currentDayDish = new CJsonDecoder<CDate>().Decoder(CRestRequest.get_dateByDate(currentdate), CDate.class);
+
+            // on l'affiche dans la textView concernée
+            dayDishTextView.setText(currentDayDish.getDayDish());
+            // on change l'appercu du plat du jour
+            dayDishImageView.setImageResource(CUtilitaries.imageRessourceSearcher(currentDayDish.getImageIdentifier()));
+        }
+        catch (Exception e) {}
     }
 
     private void initListeners() {

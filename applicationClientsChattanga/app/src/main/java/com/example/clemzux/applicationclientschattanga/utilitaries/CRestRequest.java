@@ -52,12 +52,21 @@ public class CRestRequest {
         return new get_Del().execute(mUrlString, CProperties.GET_ALL).get();
     }
 
-    // 
-    public static String get_By(String pObjectType, int pId, String pByObjectype ) throws ExecutionException, InterruptedException {
+    //
+    public static String get_ById(String pObjectType, int pId, String pByObjectype ) throws ExecutionException, InterruptedException {
 
         String mUrlString = CProperties.SERVER_URL + pObjectType + "/" + pId + "/" + pByObjectype;
 
         return new get_Del().execute(mUrlString, CProperties.GET_BY).get();
+//        return mUrlString;
+    }
+
+    public static String get_dateByDate(String pDate) throws ExecutionException, InterruptedException {
+
+        String mUrlString = CProperties.SERVER_URL + CProperties.DATE_BY_DATE + pDate;
+
+        Log.d("salut ca va ?", mUrlString);
+        return new get_Del().execute(mUrlString, CProperties.GET).get();
     }
 
 

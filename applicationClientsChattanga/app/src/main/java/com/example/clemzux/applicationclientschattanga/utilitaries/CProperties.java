@@ -1,5 +1,7 @@
 package com.example.clemzux.applicationclientschattanga.utilitaries;
 
+import chattanga.classes.CDate;
+
 /**
  * Created by clemzux on 24/08/16.
  */
@@ -24,4 +26,8 @@ public class CProperties {
     // other
     public final static String SELECTED_DAYDISH = "selectedDayDish";
     public final static String DAYDISH_MODIFICATION = "dayDishModification";
+    public final static int HOUR_RESET_DAYDISH = 19;
+
+    // path for requests
+    public final static String DATE_BY_DATE = "dates/date/";
 }
