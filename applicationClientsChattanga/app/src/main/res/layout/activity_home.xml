@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/red"
+    tools:context=".home.CHome">
+
+    <!--Layout principal, contient tout les éléments de haut en bas-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="20dp">
+
+        <!--logo de l'application-->
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logochattanga"/>
+
+        <!--Ce layout contient le plat du jour et son image-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/date_textView_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aujourd'hui on vous propose en plat du jour :"
+                android:textColor="@color/black"
+                android:layout_marginTop="50dp"
+                android:textSize="16dp"/>
+
+            <!--layout contenant l'intitulé du plat du jour + l'image du plat du jour-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:id="@+id/dayDish_textView"
+                    android:layout_width="180dp"
+                    android:layout_height="100dp"
+                    android:text="Le plat du jour n'a pas encore été saisi ou votre connection internet n'est pas active !"
+                    android:textColor="@color/black"
+                    android:layout_marginRight="10dp"/>
+
+                <ImageView
+                    android:id="@+id/dayDish_imageView"
+                    android:src="@drawable/imagetest"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <!--fin layout intintulé et image plat du jour-->
+            </LinearLayout>
+
+            <!--fin affiche plat du jour + image plat du jour-->
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N'hésitez pas a consulter notre carte sur le site et les suggestions à l'ardoise !"
+            android:textColor="@color/black"
+            android:layout_marginTop="30dp"
+            android:textSize="16dp"/>
+
+        <Button
+            android:id="@+id/reservation_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Je réserve"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"/>
+
+        <TextView
+            android:id="@+id/webSite_textView_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="www.la-chattanga.fr"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:textColor="@color/black"
+            android:textSize="16dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

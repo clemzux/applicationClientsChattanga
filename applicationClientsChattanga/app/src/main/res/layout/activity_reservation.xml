@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.clemzux.applicationclientschattanga.reservation.CReservation"
+    android:background="@color/red">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--logo de l'application-->
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logochattanga"/>
+
+        <!--layout reservation titre + date-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Réservation pour le "
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/date_textView_reservation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="aujourd'hui"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"/>
+
+            <!--fin layout titre + date-->
+        </LinearLayout>
+
+        <!--layout contenant les zones : nom, tel, nb pers-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
+
+            <!--layout contenant le nom-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nom : "
+                    android:textColor="@color/black"/>
+
+                <EditText
+                    android:id="@+id/name_editText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:textColor="@color/black"/>
+
+                <!--fin layout contenant le nom-->
+            </LinearLayout>
+
+            <!--layout contenant le num de tel-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Téléphone : "
+                    android:textColor="@color/black"/>
+
+                <EditText
+                    android:id="@+id/tel_editText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"/>
+
+                <!--fin layout contenant le num de tel-->
+            </LinearLayout>
+
+            <!--layout contenant le nb pers-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre de personnes : "
+                    android:textColor="@color/black"/>
+
+                <EditText
+                    android:id="@+id/nbPeople_editText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"/>
+
+                <!--fin layout contenant nb pers-->
+            </LinearLayout>
+
+            <!--layout contenant le nb de plats du jour-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre de plats du jour : "
+                    android:textColor="@color/black"/>
+
+                <EditText
+                    android:id="@+id/nbDayDish_editText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"/>
+
+                <!--fin layout contenant nb pers-->
+            </LinearLayout>
+
+            <!--layout contenant l'h d'arrivee-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:text="Heure d'arrivée (recommandé) : "
+                    android:textColor="@color/black"/>
+
+                <EditText
+                    android:id="@+id/h_arrive"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"/>
+
+                <!--fin layout contenant nb pers-->
+            </LinearLayout>
+
+            <!--fin layout contenant : nom, tel, nb pers-->
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remarque : "
+            android:textColor="@color/black"
+            android:layout_marginTop="20dp"/>
+
+        <!--editText remarque-->
+        <EditText
+            android:id="@+id/request_editText"
+            android:lines="2"
+            android:hint="Vous pouvez demander une table en particulier, une heure d'arrivée ..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:id="@+id/validate_reservation_button"
+            android:text="Valider\nréservation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/webSite_textView_reservation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="www.la-chattanga.fr"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="16dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
