@@ -25,13 +25,19 @@ public class CUtilitaries extends AppCompatActivity{
         t.show();
     }
 
+    public static void messageLong(Context pContext, String pVar) {
+
+        Toast t = Toast.makeText(pContext, pVar, Toast.LENGTH_LONG);
+        t.show();
+    }
+
     public static  int imageRessourceSearcher(String pImageName) {
 
         switch (pImageName) {
             case "hotdog":
                 return R.drawable.hotdog;
 
-            case "pizzafromage":
+            case "pizza":
                 return R.drawable.pizzafromage;
 
             case "pouletfrites":

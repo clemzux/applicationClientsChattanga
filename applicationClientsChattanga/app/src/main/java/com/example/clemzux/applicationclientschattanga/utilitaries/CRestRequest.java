@@ -25,7 +25,8 @@ public class CRestRequest {
     private static Object sObject;
 
 
-    // Fonction which is setting url and call asynctask for POST requests
+    // Fonctions qui implémentent POST
+
     public static String post(Object pObject, String pObjectType) throws ExecutionException, InterruptedException {
         String returnValue = "0";
         sObject = pObject;
@@ -35,7 +36,7 @@ public class CRestRequest {
         return returnValue;
     }
 
-    // Fonction which is setting url and call asynctask for PUT requests
+    // Fonction qui implémentent PUT
     public static void  put(Object pObject, String pObjectType) throws ExecutionException, InterruptedException {
         sObject = pObject;
 
@@ -58,14 +59,27 @@ public class CRestRequest {
         String mUrlString = CProperties.SERVER_URL + pObjectType + "/" + pId + "/" + pByObjectype;
 
         return new get_Del().execute(mUrlString, CProperties.GET_BY).get();
-//        return mUrlString;
     }
 
     public static String get_dateByDate(String pDate) throws ExecutionException, InterruptedException {
 
         String mUrlString = CProperties.SERVER_URL + CProperties.DATE_BY_DATE + pDate;
 
-        Log.d("salut ca va ?", mUrlString);
+        return new get_Del().execute(mUrlString, CProperties.GET).get();
+    }
+
+    public static String get_reservationByDate(int pdate) throws ExecutionException, InterruptedException {
+
+        String mUrlString = CProperties.SERVER_URL + CProperties.DATES + "/" + String.valueOf(pdate) + "/" + CProperties.RESERVATIONS;
+
+        return new get_Del().execute(mUrlString, CProperties.GET).get();
+    }
+
+    public static String get_reservationByDateAndName(int pDate, String pName) throws ExecutionException, InterruptedException {
+
+        String mUrlString = CProperties.SERVER_URL + CProperties.DATES + "/" + String.valueOf(pDate) + "/" + CProperties.RESERVATIONS +
+                "/" + CProperties.nameCurrentReservation;
+
         return new get_Del().execute(mUrlString, CProperties.GET).get();
     }
 

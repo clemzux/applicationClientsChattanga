@@ -71,7 +71,10 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:lines="1"
+                    android:maxLength="20"
+                    android:inputType="text"/>
 
                 <!--fin layout contenant le nom-->
             </LinearLayout>
@@ -86,13 +89,16 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:text="Téléphone : "
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black" />
 
                 <EditText
                     android:id="@+id/tel_editText"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLength="10"/>
 
                 <!--fin layout contenant le num de tel-->
             </LinearLayout>
@@ -113,7 +119,10 @@
                     android:id="@+id/nbPeople_editText"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLength="2"/>
 
                 <!--fin layout contenant nb pers-->
             </LinearLayout>
@@ -134,7 +143,10 @@
                     android:id="@+id/nbDayDish_editText"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:maxLength="2"/>
 
                 <!--fin layout contenant nb pers-->
             </LinearLayout>
@@ -155,7 +167,11 @@
                     android:id="@+id/h_arrive"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLength="20"
+                    android:text="12h"/>
 
                 <!--fin layout contenant nb pers-->
             </LinearLayout>
@@ -173,11 +189,13 @@
         <!--editText remarque-->
         <EditText
             android:id="@+id/request_editText"
-            android:lines="2"
             android:hint="Vous pouvez demander une table en particulier, une heure d'arrivée ..."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLength="50"/>
 
         <Button
             android:id="@+id/validate_reservation_button"
@@ -191,7 +209,7 @@
             android:id="@+id/webSite_textView_reservation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="www.la-chattanga.fr"
+            android:text="@string/web_site"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"
