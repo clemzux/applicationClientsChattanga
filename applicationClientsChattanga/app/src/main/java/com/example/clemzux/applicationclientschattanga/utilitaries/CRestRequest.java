@@ -45,6 +45,14 @@ public class CRestRequest {
         new post_Put().execute(mUrlString, CProperties.PUT);
     }
 
+    // fonction qui retourne le numero de verion de l'app
+    public static String get_appVersion() throws ExecutionException, InterruptedException {
+
+        String mUrlString = CProperties.SERVER_URL + CProperties.APP_VERSION_PATH;
+
+        return new get_Del().execute(mUrlString, CProperties.GET_ALL).get();
+    }
+
     // Fonction which is setting url and call asynctask for GET ALL requests
     public static String get_All(String mObjectType) throws ExecutionException, InterruptedException {
 

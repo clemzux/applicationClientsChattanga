@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">applicationClientsChattanga</string>
     <string name="web_site"><u>www.la-chattanga.fr</u></string>
+    <string name="update_message">Vous n\'avez pas la dernière version de l\'application, vous devez effectuer la mise à jour disponible sur le play store.</string>
+    <string name="late_hour_message">Vous ne pouvez plus réserver après 11h30, si vous voulez tout de même réserver, appelez le 07 63 11 07 07.</string>
+    <string name="tel_number"><u>07 63 11 07 07</u></string>
 </resources>

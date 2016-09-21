@@ -1,9 +1,11 @@
 package com.example.clemzux.applicationclientschattanga.reservation;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.CharArrayBuffer;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -12,6 +14,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -42,8 +46,11 @@ public class CReservation extends Activity {
 
 
     private EditText nameEditText, telEditText, nbPeopleEditText, nbDayDishEditText, requestEditText, hourArriveEditText;
-    private TextView dateTextView, webSiteTextView;
+    private TextView dateTextView, webSiteTextView, telNumber;
     private Button validateButton;
+
+    private final int PERMISSION_CALL = 1;
+    private Boolean callInProgress = false;
 
 
     //////// methods ////////
@@ -56,14 +63,20 @@ public class CReservation extends Activity {
 
         // mon code
 
-        // initialisation des widgets
-        initWidgets();
+        if (callInProgress)
+            goToHomeIntent();
 
-        // initialisation des listeners
-        initListeners();
+        else {
 
-        // on vérifie si le client n'a pas déja réservé
-        verifyReservation();
+            // initialisation des widgets
+            initWidgets();
+
+            // initialisation des listeners
+            initListeners();
+
+            // on vérifie si le client n'a pas déja réservé
+            verifyReservation();
+        }
     }
 
     private void verifyReservation() {
@@ -117,6 +130,18 @@ public class CReservation extends Activity {
         initWebSiteTextViewListener();
         initValidateButtonListener();
         initNumberDayDishEditTextListener();
+        initTelNumberTextViewListener();
+    }
+
+    private void initTelNumberTextViewListener() {
+
+        telNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                call();
+            }
+        });
     }
 
     private void initNumberDayDishEditTextListener() {
@@ -127,8 +152,6 @@ public class CReservation extends Activity {
 
                 if (String.valueOf(nbDayDishEditText.getText()).equals("0"))
                     nbDayDishEditText.setText("");
-
-                CUtilitaries.test(getApplicationContext(), "salut");
             }
         });
     }
@@ -139,18 +162,62 @@ public class CReservation extends Activity {
             @Override
             public void onClick(View view) {
 
-                initCurrentReservation();
+                if (acceptForm()) {
 
-                if (!CProperties.hasReserved) {
+                    initCurrentReservation();
 
-                    validateButtonConfiguration();
-                }
-                else {
+                    if (!CProperties.hasReserved) {
 
-                    modificationButtonConfiguration();
+                        validateButtonConfiguration();
+                    } else {
+
+                        modificationButtonConfiguration();
+                    }
                 }
             }
         });
+    }
+
+    private Boolean acceptForm() {
+
+        if (String.valueOf(nameEditText.getText()).equals("")) {
+
+            CUtilitaries.messageLong(getApplicationContext(), "Vous devez entrer un nom pour réserver !");
+            return false;
+        }
+        else if (String.valueOf(telEditText.getText()).length() != 10) {
+
+            CUtilitaries.messageLong(getApplicationContext(), "Le numéro de téléphone comporte moins de 10 chiffres !");
+            return false;
+        }
+
+        int nbPeople = 0, nbDayDish = 0;
+
+        try {
+
+            nbPeople = Integer.valueOf(String.valueOf(nbPeopleEditText.getText()));
+        }catch (Exception e) {
+
+            CUtilitaries.messageLong(getApplicationContext(), "Le nombre de personnes n'a pas de format correct !");
+            return false;
+        }
+
+        try {
+
+            nbDayDish = Integer.valueOf(String.valueOf(nbDayDishEditText.getText()));
+        }catch (Exception e) {
+
+            CUtilitaries.messageLong(getApplicationContext(), "Le nombre de plats du jour n'a pas de format correct !");
+            return false;
+        }
+
+        if (nbDayDish > nbPeople) {
+
+            CUtilitaries.messageLong(getApplicationContext(), "Le nombre de plats du jour est supérieur au nombre de réservation !");
+            return false;
+        }
+        else
+            return true;
     }
 
     private void modificationButtonConfiguration() {
@@ -248,7 +315,7 @@ public class CReservation extends Activity {
         webSiteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = "http://www.la-chattanga.fr";
+                String url = CProperties.WEBSITE_URL;
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
@@ -260,6 +327,7 @@ public class CReservation extends Activity {
 
         // textView
         dateTextView = (TextView) findViewById(R.id.date_textView_reservation);
+        dateTextView.setText(CProperties.CURRENT_DAYDISH.getDate());
         webSiteTextView = (TextView) findViewById(R.id.webSite_textView_reservation);
 
         // editText
@@ -270,14 +338,52 @@ public class CReservation extends Activity {
         nbDayDishEditText.setText("0");
         hourArriveEditText = (EditText) findViewById(R.id.h_arrive);
         requestEditText = (EditText) findViewById(R.id.request_editText);
+        telNumber = (TextView) findViewById(R.id.telNumber_reservation_activity);
 
         // button
         validateButton = (Button) findViewById(R.id.validate_reservation_button);
+    }
+
+    private void call() {
+
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            Intent callItent = new Intent(Intent.ACTION_CALL);
+            callItent.setData(Uri.parse("tel:" + "+33763110707"));
+            startActivity(callItent);
+        }
+        else
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, PERMISSION_CALL);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+
+            case PERMISSION_CALL: {
+
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    callInProgress = true;
+                    call();
+                }
+
+                return;
+            }
+        }
     }
 
     private void goToHomeIntent() {
 
         Intent homeIntent = new Intent(getApplicationContext(), CHome.class);
         startActivity(homeIntent);
+    }
+
+    @Override
+    protected void onRestart() {
+
+        super.onRestart();
+
+        goToHomeIntent();
     }
 }

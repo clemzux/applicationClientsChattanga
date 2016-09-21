@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="10dp">
 
             <!--layout contenant le nom-->
             <LinearLayout
@@ -189,7 +189,6 @@
         <!--editText remarque-->
         <EditText
             android:id="@+id/request_editText"
-            android:hint="Vous pouvez demander une table en particulier, une heure d'arrivée ..."
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
@@ -210,6 +209,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/web_site"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/telNumber_reservation_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tel_number"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:textColor="@color/black"

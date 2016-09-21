@@ -1,10 +1,15 @@
 package com.example.clemzux.applicationclientschattanga.utilitaries;
 
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.example.clemzux.applicationclientschattanga.R;
+
+import java.util.Date;
 
 /**
  * Created by clemzux on 28/08/16.
@@ -31,7 +36,7 @@ public class CUtilitaries extends AppCompatActivity{
         t.show();
     }
 
-    public static  int imageRessourceSearcher(String pImageName) {
+    public static int imageRessourceSearcher(String pImageName) {
 
         switch (pImageName) {
             case "hotdog":
@@ -45,5 +50,21 @@ public class CUtilitaries extends AppCompatActivity{
         }
 
         return R.drawable.wrongimage;
+    }
+
+    public static Boolean notToLate() {
+
+        if (CProperties.hasReserved) {
+
+            Date date = new Date();
+
+            if (date.getHours() >= 11) {
+
+                if (date.getMinutes() > 30)
+                    return false;
+            }
+        }
+
+        return true;
     }
 }
