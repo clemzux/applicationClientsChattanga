@@ -76,13 +76,6 @@ public class CRestRequest {
         return new get_Del().execute(mUrlString, CProperties.GET).get();
     }
 
-    public static String get_reservationByDate(int pdate) throws ExecutionException, InterruptedException {
-
-        String mUrlString = CProperties.SERVER_URL + CProperties.DATES + "/" + String.valueOf(pdate) + "/" + CProperties.RESERVATIONS;
-
-        return new get_Del().execute(mUrlString, CProperties.GET).get();
-    }
-
     public static String get_reservationByDateAndName(int pDate, String pName) throws ExecutionException, InterruptedException {
 
         String mUrlString = CProperties.SERVER_URL + CProperties.DATES + "/" + String.valueOf(pDate) + "/" + CProperties.RESERVATIONS +

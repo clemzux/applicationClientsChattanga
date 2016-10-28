@@ -98,7 +98,7 @@
                     android:textColor="@color/black"
                     android:inputType="number"
                     android:lines="1"
-                    android:maxLength="10"/>
+                    android:maxLength="11"/>
 
                 <!--fin layout contenant le num de tel-->
             </LinearLayout>
@@ -163,15 +163,17 @@
                     android:text="Heure d'arrivée (recommandé) : "
                     android:textColor="@color/black"/>
 
-                <EditText
+                <Spinner
                     android:id="@+id/h_arrive"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:inputType="text"
-                    android:lines="1"
-                    android:maxLength="20"
-                    android:text="12h"/>
+                    android:textColor="@color/black"/>
+
+                <Spinner
+                    android:id="@+id/m_arrive"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"/>
 
                 <!--fin layout contenant nb pers-->
             </LinearLayout>

@@ -2,26 +2,19 @@ package com.example.clemzux.applicationclientschattanga.reservation;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.CharArrayBuffer;
-import android.database.ContentObserver;
-import android.database.Cursor;
-import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.clemzux.applicationclientschattanga.R;
@@ -32,11 +25,7 @@ import com.example.clemzux.applicationclientschattanga.utilitaries.CProperties;
 import com.example.clemzux.applicationclientschattanga.utilitaries.CRestRequest;
 import com.example.clemzux.applicationclientschattanga.utilitaries.CUtilitaries;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class CReservation extends Activity {
@@ -45,7 +34,8 @@ public class CReservation extends Activity {
     //////// attributes ////////
 
 
-    private EditText nameEditText, telEditText, nbPeopleEditText, nbDayDishEditText, requestEditText, hourArriveEditText;
+    private EditText nameEditText, telEditText, nbPeopleEditText, nbDayDishEditText, requestEditText;
+    private Spinner hourArriveSpinner, minuteArriveSpinner;
     private TextView dateTextView, webSiteTextView, telNumber;
     private Button validateButton;
 
@@ -103,7 +93,7 @@ public class CReservation extends Activity {
             CProperties.CURRENT_RESERVATION = reservation;
 
             // on remplit les editText avec la reservation trouvée
-            fillEditText();
+            fillReservation();
 
         } catch (ExecutionException e) {
             e.printStackTrace();
@@ -114,14 +104,32 @@ public class CReservation extends Activity {
         }
     }
 
-    private void fillEditText() {
+    private void fillReservation() {
 
         nameEditText.setText(CProperties.CURRENT_RESERVATION.getName());
         telEditText.setText(CProperties.CURRENT_RESERVATION.getTel());
         nbPeopleEditText.setText(String.valueOf(CProperties.CURRENT_RESERVATION.getNumberPeople()));
         nbDayDishEditText.setText(String.valueOf(CProperties.CURRENT_RESERVATION.getNumberDayDish()));
-        hourArriveEditText.setText(CProperties.CURRENT_RESERVATION.getHourArrive());
         requestEditText.setText(CProperties.CURRENT_RESERVATION.getNote());
+
+        String hour = CProperties.CURRENT_RESERVATION.getHourArrive();
+
+        switch (hour.split("h")[0]) {
+
+            case "11":
+                hourArriveSpinner.setSelection(0);
+                break;
+
+            case "12":
+                hourArriveSpinner.setSelection(1);
+                break;
+
+            case "13":
+                hourArriveSpinner.setSelection(2);
+                break;
+        }
+
+        minuteArriveSpinner.setSelection(Integer.valueOf(hour.split("h")[1]));
     }
 
     private void initListeners() {
@@ -185,9 +193,9 @@ public class CReservation extends Activity {
             CUtilitaries.messageLong(getApplicationContext(), "Vous devez entrer un nom pour réserver !");
             return false;
         }
-        else if (String.valueOf(telEditText.getText()).length() != 10) {
+        else if (String.valueOf(telEditText.getText()).length() > 10) {
 
-            CUtilitaries.messageLong(getApplicationContext(), "Le numéro de téléphone comporte moins de 10 chiffres !");
+            CUtilitaries.messageLong(getApplicationContext(), "Le numéro de téléphone comporte plus de 10 chiffres !");
             return false;
         }
 
@@ -286,7 +294,8 @@ public class CReservation extends Activity {
         CProperties.CURRENT_RESERVATION.setTel(String.valueOf(telEditText.getText()));
         CProperties.CURRENT_RESERVATION.setNumberPeople(Integer.valueOf(String.valueOf(nbPeopleEditText.getText())));
         CProperties.CURRENT_RESERVATION.setNumberDayDish(Integer.valueOf(String.valueOf(nbDayDishEditText.getText())));
-        CProperties.CURRENT_RESERVATION.setHourArrive(String.valueOf(hourArriveEditText.getText()));
+        CProperties.CURRENT_RESERVATION.setHourArrive(
+                String.valueOf((String)hourArriveSpinner.getSelectedItem() + "h" + (String)minuteArriveSpinner.getSelectedItem()));
         CProperties.CURRENT_RESERVATION.setNote(String.valueOf(requestEditText.getText()));
     }
 
@@ -336,9 +345,20 @@ public class CReservation extends Activity {
         nbPeopleEditText = (EditText) findViewById(R.id.nbPeople_editText);
         nbDayDishEditText = (EditText) findViewById(R.id.nbDayDish_editText);
         nbDayDishEditText.setText("0");
-        hourArriveEditText = (EditText) findViewById(R.id.h_arrive);
         requestEditText = (EditText) findViewById(R.id.request_editText);
         telNumber = (TextView) findViewById(R.id.telNumber_reservation_activity);
+
+        // spinner
+        hourArriveSpinner = (Spinner) findViewById(R.id.h_arrive);
+        minuteArriveSpinner = (Spinner) findViewById(R.id.m_arrive);
+
+        ArrayAdapter<CharSequence> adapterH = ArrayAdapter.createFromResource(this, R.array.hours, android.R.layout.simple_spinner_item);
+        adapterH.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        hourArriveSpinner.setAdapter(adapterH);
+
+        ArrayAdapter<CharSequence> adapterM = ArrayAdapter.createFromResource(this, R.array.minutes, android.R.layout.simple_spinner_item);
+        adapterM.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        minuteArriveSpinner.setAdapter(adapterM);
 
         // button
         validateButton = (Button) findViewById(R.id.validate_reservation_button);

@@ -18,13 +18,13 @@ public class CProperties {
     public static CReservation CURRENT_RESERVATION = new CReservation();
 
     // ip chattanga
-//    public static final String SERVER_URL = "http://176.157.85.69:9999/";
+    public static final String SERVER_URL = "http://176.157.85.69:9999/";
     // ip ?
 //    public static final String SERVER_URL = "http://192.168.0.195:9999/";
     // ip maison capi
 //    public static final String SERVER_URL = "http://192.168.1.91:9999/";
     // ip maison mémé
-    public static final String SERVER_URL = "http://192.168.1.17:9999/";
+//    public static final String SERVER_URL = "http://192.168.1.17:9999/";
 
     // request types
     public final static String GET      = "GET";
